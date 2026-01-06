@@ -30,9 +30,8 @@ def user_input_features():
     }
     features = pd.DataFrame(data, index=[0])
     return features
-
+tenure, monthly_usd, total_usd, monthly_idr, total_idr = user_input_features()
 input_df = user_input_features()
-
 st.subheader('Data Pelanggan')
 st.write(input_df)
 
@@ -63,3 +62,4 @@ if st.button('Prediksi Sekarang'):
     else:
         st.success(f" PREDIKSI: AMAN (Setia)")
         st.write("Pelanggan terlihat puas dengan layanan.")
+
