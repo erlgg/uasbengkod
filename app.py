@@ -54,7 +54,7 @@ if st.button('Prediksi'):
     st.write(f"Probabilitas Churn (Berhenti): **{prob_churn:.2f}%**")
     st.progress(int(prob_churn))
     
-    if prob_churn > 50:
+    if prob_churn > 35:
         st.error(f"PREDIKSI: BERPOTENSI CHURN!")
         st.write("Saran: Tawarkan diskon atau kontrak jangka panjang segera.")
     elif prob_churn > 30:
@@ -63,3 +63,4 @@ if st.button('Prediksi'):
     else:
         st.success(f"PREDIKSI: AMAN (Setia)")
         st.write("Pelanggan terlihat puas dengan layanan.")
+
