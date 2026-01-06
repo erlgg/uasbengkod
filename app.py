@@ -17,7 +17,7 @@ def user_input_features():
     dependents = st.sidebar.selectbox('Punya Tanggungan (Dependents)?', ['Yes', 'No'])
     contract = st.sidebar.selectbox('Kontrak', ['Month-to-month', 'One year', 'Two year'])
     paperless = st.sidebar.selectbox('Tagihan Paperless?', ['Yes', 'No'])
-tenure, monthly_usd, total_usd, monthly_idr, total_idr = user_input_features()    
+
     data = {
         'tenure': tenure,
         'MonthlyCharges': monthly_charges,
@@ -41,15 +41,13 @@ if st.button('Prediksi Sekarang'):
     final_input[0] = tenure
     final_input[1] = monthly_usd
     final_input[2] = total_usd
-    
     final_input_reshaped = final_input.reshape(1, -1)
     final_input_scaled = scaler.transform(final_input_reshaped)
     probability = model.predict_proba(final_input_scaled)
     prob_churn = probability[0][1] * 100
     prob_stay = probability[0][0] * 100
-    
     st.subheader('Hasil Analisa Risiko')
-    
+    tenure, monthly_usd, total_usd, monthly_idr, total_idr = user_input_features()     
     st.write(f"Probabilitas Churn (Berhenti): **{prob_churn:.2f}%**")
     st.progress(int(prob_churn))
     
@@ -62,5 +60,6 @@ if st.button('Prediksi Sekarang'):
     else:
         st.success(f" PREDIKSI: AMAN (Setia)")
         st.write("Pelanggan terlihat puas dengan layanan.")
+
 
 
