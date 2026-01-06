@@ -41,26 +41,35 @@ if st.button('Prediksi'):
     final_input[0] = input_df['tenure'][0] 
     final_input[1] = input_df['MonthlyCharges'][0] 
     final_input[2] = input_df['TotalCharges'][0]
-    
+    try:
+        final_input[3] = input_df['Dependents_Yes'][0] 
+        final_input[4] = input_df['PaperlessBilling_Yes'][0]
+        final_input[5] = input_df['Contract_One year'][0]
+        final_input[6] = input_df['Contract_Two year'][0]
+        
+        f input_df['Contract_One year'][0] == 0 and input_df['Contract_Two year'][0] == 0:
+            if input_df['MonthlyCharges'][0] > 80:
+                if expected_features > 10: 
+                    final_input[7] = 1 
+                    final_input[8] = 1 
+                    
+    except IndexError:
+        pass 
+        
     final_input_reshaped = final_input.reshape(1, -1)
     final_input_scaled = scaler.transform(final_input_reshaped)
-    
     probability = model.predict_proba(final_input_scaled)
     prob_churn = probability[0][1] * 100
     prob_stay = probability[0][0] * 100
     
     st.subheader('Hasil Analisa')
-    
     st.write(f"Probabilitas Churn (Berhenti): **{prob_churn:.2f}%**")
     st.progress(int(prob_churn))
     
     if prob_churn > 35:
         st.error(f"PREDIKSI: BERPOTENSI CHURN!")
         st.write("Saran: Tawarkan diskon atau kontrak jangka panjang segera.")
-    elif prob_churn > 30:
+    elif prob_churn > 20: 
         st.warning(f"HATI-HATI: Risiko Sedang ({prob_churn:.2f}%)")
-        st.write("Pelanggan ini mulai ragu. Perhatikan keluhannya.")
     else:
         st.success(f"PREDIKSI: AMAN (Setia)")
-        st.write("Pelanggan terlihat puas dengan layanan.")
-
