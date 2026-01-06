@@ -37,19 +37,29 @@ st.subheader('Data Pelanggan')
 st.write(input_df)
 
 if st.button('Prediksi Sekarang'):
-    final_input = np.zeros(len(scaler.mean_))
+    expected_features = scaler.n_features_in_
+    final_input = np.zeros(expected_features)
+    final_input[0] = tenure
+    final_input[1] = monthly_usd
+    final_input[2] = total_usd
     
-    final_input[0] = input_df['tenure'][0]
-    final_input[1] = input_df['MonthlyCharges'][0]
-    final_input[2] = input_df['TotalCharges'][0]
-    
-    final_input_scaled = scaler.transform([final_input])
-    
-    prediction = model.predict(final_input_scaled)
+    final_input_reshaped = final_input.reshape(1, -1)
+    final_input_scaled = scaler.transform(final_input_reshaped)
     probability = model.predict_proba(final_input_scaled)
-
-    st.subheader('Hasil Prediksi')
-    if prediction[0] == 1:
-        st.error(f" Pelanggan Berpotensi CHURN (Berhenti) dengan probabilitas {probability[0][1]*100:.2f}%")
+    prob_churn = probability[0][1] * 100
+    prob_stay = probability[0][0] * 100
+    
+    st.subheader('Hasil Analisa Risiko')
+    
+    st.write(f"Probabilitas Churn (Berhenti): **{prob_churn:.2f}%**")
+    st.progress(int(prob_churn))
+    
+    if prob_churn > 50:
+        st.error(f" PREDIKSI: BERPOTENSI CHURN!")
+        st.write("Saran: Tawarkan diskon atau kontrak jangka panjang segera.")
+    elif prob_churn > 30:
+        st.warning(f" HATI-HATI: Risiko Sedang ({prob_churn:.2f}%)")
+        st.write("Pelanggan ini mulai ragu. Perhatikan keluhannya.")
     else:
-        st.success(f" Pelanggan Tetap LOYAL dengan probabilitas {probability[0][0]*100:.2f}%")
+        st.success(f" PREDIKSI: AMAN (Setia)")
+        st.write("Pelanggan terlihat puas dengan layanan.")
