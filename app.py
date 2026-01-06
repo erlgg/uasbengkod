@@ -14,7 +14,7 @@ def user_input_features():
     monthly_charges = st.sidebar.number_input('Biaya Bulanan ($)', 0.0, 200.0, 70.0)
     total_charges = st.sidebar.number_input('Total Biaya ($)', 0.0, 10000.0, 1000.0)
 
-    dependents = st.sidebar.selectbox('Punya Tanggungan (Dependents)?', ['Yes', 'No'])
+    dependents = st.sidebar.selectbox('Punya Tanggungan ?', ['Yes', 'No'])
     contract = st.sidebar.selectbox('Kontrak', ['Month-to-month', 'One year', 'Two year'])
     paperless = st.sidebar.selectbox('Tagihan Paperless?', ['Yes', 'No'])
     
@@ -67,9 +67,10 @@ if st.button('Prediksi'):
     st.progress(int(prob_churn))
     
     if prob_churn > 35:
-        st.error(f"PREDIKSI: BERPOTENSI CHURN!")
-        st.write("Saran: Tawarkan diskon atau kontrak jangka panjang segera.")
+        st.error(f"PREDIKSI: BERPOTENSI CHURN")
+        st.write("Saran: Tawarkan diskon atau promo lain.")
     elif prob_churn > 20: 
-        st.warning(f"HATI-HATI: Risiko Sedang ({prob_churn:.2f}%)")
+        st.warning(f"HATI-HATI: Resiko Sedang ({prob_churn:.2f}%)")
     else:
-        st.success(f"PREDIKSI: AMAN (Setia)")
+        st.success(f"PREDIKSI: AMAN")
+
