@@ -47,7 +47,7 @@ if st.button('Prediksi'):
         final_input[5] = input_df['Contract_One year'][0]
         final_input[6] = input_df['Contract_Two year'][0]
         
-        f input_df['Contract_One year'][0] == 0 and input_df['Contract_Two year'][0] == 0:
+        if input_df['Contract_One year'][0] == 0 and input_df['Contract_Two year'][0] == 0:
             if input_df['MonthlyCharges'][0] > 80:
                 if expected_features > 10: 
                     final_input[7] = 1 
@@ -73,4 +73,5 @@ if st.button('Prediksi'):
         st.warning(f"HATI-HATI: Resiko Sedang ({prob_churn:.2f}%)")
     else:
         st.success(f"PREDIKSI: AMAN")
+
 
