@@ -71,9 +71,10 @@ if st.button('Prediksi'):
         st.error(f"PREDIKSI: BERPOTENSI CHURN")
         st.write("Saran: Tawarkan diskon atau promo lain.")
     elif prob_churn > 20: 
-        st.warning(f"HATI-HATI: Resiko Sedang ({prob_churn:.2f}%)")
+        st.warning(f"HATI-HATI: Resiko Berpotensi({prob_churn:.2f}%)")
     else:
         st.success(f"PREDIKSI: AMAN")
+
 
 
 
