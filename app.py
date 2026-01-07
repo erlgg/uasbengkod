@@ -58,6 +58,7 @@ if st.button('Prediksi'):
         
     final_input_reshaped = final_input.reshape(1, -1)
     final_input_scaled = scaler.transform(final_input_reshaped)
+    
     probability = model.predict_proba(final_input_scaled)
     prob_churn = probability[0][1] * 100
     prob_stay = probability[0][0] * 100
@@ -73,5 +74,6 @@ if st.button('Prediksi'):
         st.warning(f"HATI-HATI: Resiko Sedang ({prob_churn:.2f}%)")
     else:
         st.success(f"PREDIKSI: AMAN")
+
 
 
